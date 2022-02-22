@@ -8,7 +8,9 @@ class ImageGallery extends React.Component {
   render() {
     return (
       <ul className={s.imageGallery}>
-        <ImageGalleryItem />
+        {this.props.arreyImg.map(img => {
+          return <ImageGalleryItem img={img} />;
+        })}
       </ul>
     );
   }

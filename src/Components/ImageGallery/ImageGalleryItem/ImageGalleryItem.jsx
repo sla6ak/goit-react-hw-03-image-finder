@@ -7,8 +7,8 @@ class ImageGalleryItem extends React.Component {
   render() {
     return (
       <>
-        <li className={s.galleryItem}>
-          <img src="" alt="" />
+        <li key={this.props.img.id} className={s.galleryItem}>
+          <img src={this.props.img.largeImageURL} alt="" />
         </li>
       </>
     );

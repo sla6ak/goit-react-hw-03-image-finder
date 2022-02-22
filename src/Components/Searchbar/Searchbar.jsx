@@ -12,6 +12,7 @@ class Searchbar extends React.Component {
   //внутрений метод сабмита обрабатывающий событие
   formSubmit = event => {
     event.preventDefault();
+    this.props.findImg(this.state.searchWord);
     this.reset();
   };
   // очистка формы
