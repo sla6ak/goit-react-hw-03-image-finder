@@ -5,12 +5,11 @@ class ImageGalleryItem extends React.Component {
   state = {};
 
   render() {
+    const { img } = this.props;
     return (
-      <>
-        <li key={this.props.img.id} className={s.galleryItem}>
-          <img src={this.props.img.largeImageURL} alt="" />
-        </li>
-      </>
+      <li className={s.galleryItem}>
+        <img src={img.largeImageURL} alt="" className={s.galleryImg} />
+      </li>
     );
   }
 }
