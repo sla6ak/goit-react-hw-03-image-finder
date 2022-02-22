@@ -1,11 +1,11 @@
-import s from './ContactList.module.css';
+import s from './Button.module.css';
 import React from 'react';
 
 class Button extends React.Component {
   state = {};
 
   render() {
-    return <></>;
+    return <button className={s.button}>Load more</button>;
   }
 }
 export default Button;
