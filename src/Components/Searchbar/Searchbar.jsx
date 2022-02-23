@@ -12,9 +12,10 @@ class Searchbar extends React.Component {
   //внутрений метод сабмита обрабатывающий событие
   formSubmit = event => {
     event.preventDefault();
-    this.props.findImg(this.state.searchWord);
-    this.reset();
+    this.props.setSearchWord(this.state.searchWord);
+    // this.reset(); // выяснил что не совсем удобно когда много листал забывал а что собственно ввел
   };
+
   // очистка формы
   reset = () => {
     this.setState({ searchWord: '' });
@@ -27,7 +28,6 @@ class Searchbar extends React.Component {
           <button type="submit" className={s.button}>
             <AiOutlineSearch className={s.search} />
           </button>
-
           <input
             className={s.input}
             type="text"
