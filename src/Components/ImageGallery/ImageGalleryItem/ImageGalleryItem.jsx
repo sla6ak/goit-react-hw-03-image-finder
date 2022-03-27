@@ -8,7 +8,13 @@ class ImageGalleryItem extends React.Component {
     const { img } = this.props;
     return (
       <li className={s.galleryItem}>
-        <img src={img.largeImageURL} alt="" className={s.galleryImg} />
+        <img
+          src={img.webformatURL}
+          data-img={img.largeImageURL}
+          alt={img.tags}
+          className={s.galleryImg}
+          width={500}
+        />
       </li>
     );
   }

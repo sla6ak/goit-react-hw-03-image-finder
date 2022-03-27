@@ -7,7 +7,7 @@ class ImageGallery extends React.Component {
 
   render() {
     return (
-      <ul className={s.imageGallery}>
+      <ul onClick={this.props.onModalOpen} className={s.imageGallery}>
         {this.props.arreyImg.map(img => {
           return <ImageGalleryItem key={img.id} img={img} />;
         })}
