@@ -5,6 +5,7 @@ import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
+import * as Scroll from 'react-scroll';
 import { ToastContainer, toast } from 'react-toastify'; // попапы
 //так как в моем проэкте есть попапы, я не буду созавать отдельные компоненты для рендера в них ошибок, а просто использую ифы.
 
@@ -26,6 +27,7 @@ class App extends React.Component {
 
   //это функция пропс для кнопки листания страниц
   loadMore = () => {
+    Scroll.animateScroll.scrollMore(300);
     this.setState(prevState => ({
       pages: prevState.pages + 1,
     }));
