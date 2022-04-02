@@ -6,17 +6,19 @@ import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
 import * as Scroll from 'react-scroll';
+import { fetchGalery } from 'utilits/fetchGalery'; // функция не делает сам запрос но хранит все настройки для поиска.
 import { ToastContainer, toast } from 'react-toastify'; // попапы
 //так как в моем проэкте есть попапы, я не буду созавать отдельные компоненты для рендера в них ошибок, а просто использую ифы.
 
 class App extends React.Component {
   state = {
-    pages: 1,
-    searchWord: '',
-    arreyImg: [],
-    modal: null,
-    sceleton: false,
-    error: null,
+    pages: 1, //текущая страница
+    searchWord: '', //поисковое слово
+    arreyImg: [], //картинки с сервера
+    modal: null, //рендерит либо нет модалку
+    sceleton: false, //рендерит либо нет анимацию загрузки
+    error: null, //хранит информацию об ошибках сервера
+    buttonIs: false, // рендерит или нет кнопку еще
   };
 
   //это функция пропс для поискового запроса
@@ -37,33 +39,22 @@ class App extends React.Component {
   findImg = async isNew => {
     //рендерим загрузчик
     this.setState({ sceleton: true });
-    const BASEurl = 'https://pixabay.com/api/';
-    //параметры запроса
-    const meta = new URLSearchParams({
-      key: '25142623-5ec88ba8c20545ff15079e1b4',
-      q: this.state.searchWord,
-      image_type: 'photo',
-      orientation: 'horizontal',
-      safesearch: true,
-      page: this.state.pages, //получает состояние
-      per_page: 12,
-    });
-    const url = `${BASEurl}?${meta}`;
     try {
-      const findImgsJSON = await fetch(url);
+      const findImgsJSON = await fetch(
+        fetchGalery(this.state.searchWord, this.state.pages)
+      );
       const findImgs = await findImgsJSON.json();
       if (findImgs.totalHits === 0) {
+        this.setState({ buttonIs: false });
         toast.warning(`We cant finde nosing`);
-      } else {
+      } else if (findImgs.totalHits > this.state.pages * 12) {
+        this.setState({ buttonIs: true });
         toast.success(
-          `We finde ${
-            findImgs.totalHits > this.state.pages * 12
-              ? this.state.pages * 12
-              : 'last imges'
-          } of ${findImgs.totalHits} imeges`
+          `We finde ${this.state.pages * 12} of ${findImgs.totalHits} imeges`
         );
-        //тут мы возвратим массив с ответом
-        // console.log(findImgs.totalHits.toString());
+      } else if (findImgs.totalHits < this.state.pages * 12) {
+        this.setState({ buttonIs: false });
+        toast.warning(`We finde last imges of ${findImgs.totalHits} imeges`);
       }
       // и вызовем функцию отрисовки
       isNew ? this.renderNew(findImgs.hits) : this.renderMore(findImgs.hits);
@@ -116,11 +107,13 @@ class App extends React.Component {
       <div className={s.papers}>
         <Searchbar setSearchWord={this.setSearchWord} />
         <ImageGallery
-          arreyImg={this.state.arreyImg}
           onModalOpen={this.onModalOpen}
+          arreyImg={this.state.arreyImg}
         />
         {this.state.sceleton && <Loader />}
-        {this.state.arreyImg.length > 0 && <Button loadMore={this.loadMore} />}
+        {this.state.arreyImg.length > 0 && this.state.buttonIs === true && (
+          <Button loadMore={this.loadMore} />
+        )}
         {this.state.modal && (
           <Modal
             imgFull={this.state.modal}

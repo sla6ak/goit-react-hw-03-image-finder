@@ -1,18 +1,14 @@
 import s from './ImageGallery.module.css';
 import React from 'react';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
-class ImageGallery extends React.Component {
-  state = {};
-
-  render() {
-    return (
-      <ul onClick={this.props.onModalOpen} className={s.imageGallery}>
-        {this.props.arreyImg.map(img => {
-          return <ImageGalleryItem key={img.id} img={img} />;
-        })}
-      </ul>
-    );
-  }
-}
+const ImageGallery = ({ onModalOpen, arreyImg }) => {
+  return (
+    <ul onClick={() => onModalOpen()} className={s.imageGallery}>
+      {arreyImg.map(impg => {
+        return <ImageGalleryItem key={impg.id} impg={impg} />;
+      })}
+    </ul>
+  );
+};
 export default ImageGallery;
