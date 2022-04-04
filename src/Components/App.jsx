@@ -96,7 +96,7 @@ class App extends React.Component {
     }));
   };
 
-  onModalClouse = e => {
+  onModalClouse = () => {
     this.setState(() => ({
       modal: null,
     }));

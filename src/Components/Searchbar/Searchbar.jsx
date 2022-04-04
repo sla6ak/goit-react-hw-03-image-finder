@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Searchbar.module.css';
 import { AiOutlineSearch } from 'react-icons/ai';
+import propTypes from 'prop-types';
 
 class Searchbar extends React.Component {
   state = { searchWord: '' };
@@ -44,3 +45,7 @@ class Searchbar extends React.Component {
 }
 
 export default Searchbar;
+
+Searchbar.propTypes = {
+  setSearchWord: propTypes.func,
+};

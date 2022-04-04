@@ -1,6 +1,7 @@
 import s from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 
 export default class Modal extends Component {
   keyDownClouse = e => {
@@ -25,3 +26,4 @@ export default class Modal extends Component {
     );
   }
 }
+Modal.propTypes = { onModalClouse: propTypes.func };
